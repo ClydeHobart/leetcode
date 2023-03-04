@@ -1,0 +1,10 @@
+{
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "vector": "cpp",
+        "ios": "cpp",
+        "xiosbase": "cpp",
+        "compare": "cpp",
+        "iostream": "cpp"
+    }
+}
