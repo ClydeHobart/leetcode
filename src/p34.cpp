@@ -1,113 +1,108 @@
+#include "p34.h"
+
 #include <algorithm>
 #include <vector>
 
-#include "test.h"
+using namespace std;
 
-#define PROBLEM_34_INCLUDES
-
-namespace p34
+class Solution
 {
-    using namespace std;
-
-#include <algorithm>
-#include <vector>
-
-    class Solution
+public:
+    vector<int> searchRange(vector<int> &nums, int target)
     {
-    public:
-        vector<int> searchRange(vector<int> &nums, int target)
+        int start, end;
+
+        findStartAndEnd(nums, start, end, target);
+
+        return {start, end};
+    }
+
+    static void findStartAndEnd(vector<int> &nums, int &outStart, int &outEnd, int target)
+    {
+        outStart = -1;
+        outEnd = -1;
+
+        if (nums.size() == 0)
         {
-            int start, end;
-
-            findStartAndEnd(nums, start, end, target);
-
-            return {start, end};
+            return;
         }
 
-        static void findStartAndEnd(vector<int> &nums, int &outStart, int &outEnd, int target)
+        const int last = nums.size() - 1;
+        const auto compareToBoundary = [&, target, last](int index, bool isStart) -> int
         {
-            outStart = -1;
-            outEnd = -1;
+            const int compareToTarget = nums[index] - target;
 
-            if (nums.size() == 0)
+            if (compareToTarget != 0)
             {
-                return;
+                return compareToTarget;
             }
 
-            const int last = nums.size() - 1;
-            const auto compareToBoundary = [&, target, last](int index, bool isStart) -> int
+            if (isStart)
             {
-                const int compareToTarget = nums[index] - target;
-
-                if (compareToTarget != 0)
+                if (index == 0 || nums[index - 1] < target)
                 {
-                    return compareToTarget;
-                }
-
-                if (isStart)
-                {
-                    if (index == 0 || nums[index - 1] < target)
-                    {
-                        return 0;
-                    }
-                    else
-                    {
-                        return 1;
-                    }
+                    return 0;
                 }
                 else
                 {
-                    if (index == last || nums[index + 1] > target)
-                    {
-                        return 0;
-                    }
-                    else
-                    {
-                        return -1;
-                    }
+                    return 1;
                 }
-            };
-            const auto tryFindBoundary = [&, last](int &boundary, int left, int right, bool isStart) -> bool
-            {
-                int middle;
-                int compareMiddleToBoundary;
-
-                while (true)
-                {
-                    middle = (right + left) / 2;
-                    compareMiddleToBoundary = compareToBoundary(middle, isStart);
-
-                    if (compareMiddleToBoundary == 0)
-                    {
-                        boundary = middle;
-
-                        return true;
-                    }
-                    else if (left == right)
-                    {
-                        return false;
-                    }
-                    else if (compareMiddleToBoundary < 0)
-                    {
-                        left = min(middle + 1, right);
-                    }
-                    else
-                    {
-                        right = max(left, middle - 1);
-                    }
-                }
-            };
-
-            int start, end;
-
-            if (tryFindBoundary(start, 0, last, true) && tryFindBoundary(end, start, last, false))
-            {
-                outStart = start;
-                outEnd = end;
             }
-        }
-    };
+            else
+            {
+                if (index == last || nums[index + 1] > target)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+        };
+        const auto tryFindBoundary = [&, last](int &boundary, int left, int right, bool isStart) -> bool
+        {
+            int middle;
+            int compareMiddleToBoundary;
 
+            while (true)
+            {
+                middle = (right + left) / 2;
+                compareMiddleToBoundary = compareToBoundary(middle, isStart);
+
+                if (compareMiddleToBoundary == 0)
+                {
+                    boundary = middle;
+
+                    return true;
+                }
+                else if (left == right)
+                {
+                    return false;
+                }
+                else if (compareMiddleToBoundary < 0)
+                {
+                    left = min(middle + 1, right);
+                }
+                else
+                {
+                    right = max(left, middle - 1);
+                }
+            }
+        };
+
+        int start, end;
+
+        if (tryFindBoundary(start, 0, last, true) && tryFindBoundary(end, start, last, false))
+        {
+            outStart = start;
+            outEnd = end;
+        }
+    }
+};
+
+namespace p34
+{
     void example1()
     {
         vector<int> nums{5, 7, 7, 8, 8, 10};
@@ -132,8 +127,9 @@ namespace p34
         assert(Solution().searchRange(nums, target) == vector<int>{-1, -1});
     }
 
-    static const test::Example examples[]{
+    const test::Example examples[]{
         &example1,
         &example2,
-        &example3};
+        &example3,
+        nullptr};
 }

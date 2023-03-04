@@ -1,14 +1,17 @@
 #include <iostream>
 
-#include "p34.cpp"
+#include "p34.h"
+#include "p1276.h"
 
 using namespace std;
 using namespace test;
 
 #define ARRAY_SIZE(x) sizeof(x) / sizeof(*x)
 #define LIST_PROBLEMS(f) \
-    f(34)
-#define DEFINE_PROBLEM_DATA(problem) ProblemData{p##problem::examples, ARRAY_SIZE(p##problem::examples), problem},
+    f(34)                \
+        f(1276)
+
+#define DEFINE_PROBLEM_DATA(problem) ProblemData{p##problem::examples, problem},
 
 static const ProblemData problems[] = {
     LIST_PROBLEMS(DEFINE_PROBLEM_DATA)};
