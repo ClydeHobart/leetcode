@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "p34.h"
+#include "p420.h"
 #include "p1276.h"
 
 using namespace std;
@@ -9,7 +10,8 @@ using namespace test;
 #define ARRAY_SIZE(x) sizeof(x) / sizeof(*x)
 #define LIST_PROBLEMS(f) \
     f(34)                \
-        f(1276)
+        f(420)           \
+            f(1276)
 
 #define DEFINE_PROBLEM_DATA(problem) ProblemData{p##problem::examples, problem},
 

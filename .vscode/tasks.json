@@ -28,6 +28,7 @@
                 "/Fe${workspaceFolder}\\${workspaceFolderBasename}.exe",
                 "${workspaceFolder}\\src\\main.cpp",
                 "${workspaceFolder}\\src\\p34.cpp",
+                "${workspaceFolder}\\src\\p420.cpp",
                 "${workspaceFolder}\\src\\p1276.cpp",
                 "${workspaceFolder}\\src\\test.cpp",
             ],

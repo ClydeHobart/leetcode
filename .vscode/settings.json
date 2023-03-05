@@ -5,6 +5,10 @@
         "ios": "cpp",
         "xiosbase": "cpp",
         "compare": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "cctype": "cpp",
+        "string": "cpp",
+        "xstring": "cpp",
+        "utility": "cpp"
     }
 }
